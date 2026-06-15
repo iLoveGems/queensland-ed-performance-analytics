@@ -33,7 +33,7 @@ The consolidated master dataset (containing records from July 2015 to September 
 ### 3. Dimensional Modeling (Power BI)
 To ensure seamless filtering and lightning-fast report performance, the data model was structured into a clean **Star Schema** within Power BI, linking fact tables to specific dimensional attributes (`DimYear`, `DimRemoteness`, etc.)[cite: 1].
 
-![Power BI Star Schema Data Model](images/04_power_bi_data_model.png)
+![Power BI Star Schema Data Model](images/04_powerbi_data_model.png)
 *Figure 4: Relational Star Schema implemented for dashboard cross-filtering[cite: 1].*
 
 ---

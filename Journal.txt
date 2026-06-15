@@ -1,0 +1,152 @@
+2/06/2026:
+Entry 1 - Data Acquisition
+	
+	> Downloaded historical Emergency Department datasets from the Queensland Open Data Portal.
+	> Identified that historical files were supplied in multiple formats (.xls and .csv)
+	> Converted all files to .csv format simplify ingestion and standardisation.
+
+
+------------------------------------------------------------
+Entry 2 - Initial Data Investigation
+
+	> Obtained the accompanying Queensland Health data dictionary describing each variable.
+	> Imported the documented column descriptions into the master dataset.
+	> During validation, discovered that the documented column order did not align with the actual data contained in historical files.
+	> Determined that applying the documented column names directly resulted in incorrect interpretation of several performance measures.
+
+
+------------------------------------------------------------
+Entry 3 - Schema Validation
+
+	> Compared multiple historical datasets (2015, 2018, 2019) against the current 2025 quarterly dataset.
+	> Identified that historical datasets used a different column ordering for several Emergency Department performance measures.
+	> Investigated the relationship between waiting times metrics, admission metrics, and treatment completion metrics to determine the correct field mappings.
+	> Developed a standardised column mapping to align historical data with the current Queensland Health reporting schema.
+
+
+------------------------------------------------------------
+Entry 4 - Data Transformation
+
+	> Created a Power Query workflow to import and combine historical datasets.
+	> Applied standardised column names across all historical files.
+	> Corrected column mappings to ensure performance measures aligned with the correct fields.
+	> Validated transformed data against original sources files to confirm accuracy.
+
+
+------------------------------------------------------------
+Entry 5 - Data Quality Assurance
+
+	> Conducted row-level validation using August 2015 source data.
+	> Verified attendance counts, waiting time measures, admission percentages, and treatment completion metrics against the original dataset.
+	> Confirmed that transformed records matched source records with no identified discrepancies.
+
+
+------------------------------------------------------------
+Entry 6 - 
+
+	> The 2022 quarterly dataset contained a text placeholder in attendance variation field rather than a numeric value.
+	> This value was treated as missing (0) during cleaning to preserve numeric data integrity
+
+
+------------------------------------------------------------
+Entry 7 -
+
+	> Datasets were separated into three .csv files: 2015-2022, 2023-2024, 2025. This was done due to inconsistencies with column 	names and orders, removal of an additional column in 2023-2024. The columns were standardised to match the latest 2025 format.
+	> All were merged into one master file.
+	> Final validation identifies no duplicate valid record, no invalid percentage ranges, and no attendance count inconsistencies between triage-level rows and ALL rows.
+	> Six blank system-generated rows with a 0/01/1900 date were removed.
+	> A negative median waiting time value was treated as a source-data anomaly and set to null prior to analysis.
+
+
+ ------------------------------------------------------------
+Entry 8 - 
+
+	> Facility naming conventions varied across reporting periods despite sharing the same facility code.
+	> A standard facility naming convention was developed and applied using Power Query to ensure consistency across historical and current datasets.
+
+
+------------------------------------------------------------
+Entry 9 - Creation of Analytical Dataset
+
+	> Following completion of data cleaning and validation, all datasets were consolidated into a single master Emergency Department dataset.
+	> The final dataset contains records from July 2015 to September 2025.
+	> Additional temporal variables (Month, Quarter, Year) were created to support trend analysis.
+	> The final dataset was exported for loading into PostgreSQL and subsequent analysis using SQL and Power BI.
+
+
+------------------------------------------------------------
+Entry 10 - Initial SQL Validation
+
+	> Imported the final master dataset into PostgreSQL.
+	> Conducted validation queries to confirm row counts, date ranges, triage categories, and percentage value ranges.
+	> Identified and standardised inconsistent triage category values ("All" and "ALL").
+
+
+------------------------------------------------------------
+3/06/2026
+Entry 11 - Exploratory Analysis
+
+	> Conducted exploratory SQL analysis of Emergency Department attendances.
+	> Investigated statewide demand trends between 2015 and 2025.
+	> Compared attendance growth across Hospital and Health Services.
+	> Compared attendance by triage category
+
+
+------------------------------------------------------------
+Entry 12 - 
+
+	> Investigated Pillar Two of Project One
+	> Assessed median waiting time to treatment
+	> Assessed patients being seen within clinically recommended times
+	> Assessed triage category performance across Hospitals and Health Services
+
+
+------------------------------------------------------------
+8/06/2026
+Entry 13 - SQL Analysis Framework Completed!
+
+	> Investigated Pillar Three of Project One
+	> Assessed patient flow using ED stay within 4 hours, admissions within 4 hours, patients admitted from ED, patients who did not wait, and patients who left after treatment commenced.
+	> Recalculated aggregated percentage measures from attendance counts where appropriate to avoid misleading simple averages.
+	> Final SQL outputs were exported as CSV files to support future Power BI dashboard development.
+
+
+------------------------------------------------------------
+9/06/2026
+Entry 14 - Power BI Integration and Data Modelling
+
+	> Connected Power BI desktop to the PostgreSQL database containing the final Emergency Department master dataset.
+	> Reviewed imported data types and prepared the data model for dashboard development.
+	> Commenced development of interactive dashboard pages aligned with the three project pillars: Emergency Department Demand, Timeliness of Care, and Patient Flow Performance.
+
+
+------------------------------------------------------------
+10/06/2026
+Entry 15 - Pillar One Dashboard Development
+
+	> Developed the Pillar One Power BI dashboard page to analyse Emergency Department demand across Queensland.
+	> Created KPI cards and visualisations to summarise total presentations, average annual presentations, busiest Health Service, and busiest hospital.	
+	> Built visuals comparing ED presentations by year, Health Service, facility, and triage category.
+	> Applied slicers and formatting adjustments to improve interactivity, readability, and dashboard presentation.
+
+
+------------------------------------------------------------
+Entry 16 - Pillar Two Dashboard Development
+
+	> Developed the Pillar Two Power BI dashboard page to assess Emergency Department timeliness of care.
+	> Created KPI cards to identify best and lowest performing Health Services, and to summarise patients seen within clinically recommended timeframes for Triage Category 1 and Triage Category 3.
+	> Built visualisations to analyse median waiting time trends, performance by triage category, and variation across Health Services.
+	> Added a triage category slicer to allow users to filter waiting time trends while maintaining separate filtering behaviour for other visuals.
+
+
+------------------------------------------------------------
+11/06/2026
+Entry 17 - Pillar Three Dashboard Development
+
+	> Developed the Pillar Three Power BI dashboard page to analyse Emergency Department patient flow and treatment completion.
+	> Created KPI cards to summarise ED stay within four hours, admissions within four hours, patients who did not wait for treatment, and patients who left after treatment commenced.
+	> Built trend visualisations comparing patient flow performance across remoteness classifications.
+	> Created facility-level visuals including Top 10 hospitals by did-not-wait rate and a scatter plot exploring the relationship between ED demand and did-not-wait rates.
+	> Reviewed Power BI relationships between SQL output tables to improve slicer functionality across dashboard pages.
+
+	
